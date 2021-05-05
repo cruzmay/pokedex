@@ -1,68 +1,29 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { PokeContext } from '../../context/PokeContext';
 import { ordered } from '../../utils/ordered';
-import { Card } from '../Card/Card'
+import { FilterPokemons } from '../FilterPokemons/FilterPokemons';
+import { SearchPokemon } from '../SearchPokemon/SearchPokemon';
 
 export const CardContainer = () => {
 
-    const [counter, setcounter] = useState(20)
-    const {checkbox} = useContext(PokeContext)
-
-    console.log(checkbox)
-
-    const increase = () => {
-        setcounter(counter + 20)
-    }
-    const reset = () => {
-        setcounter(20)
-    }
-
-
-    const {pokemons} = useContext(PokeContext)
-    
+    const {checkbox, pokemons} = useContext(PokeContext)
+    //order the data as comming from api via pokemons - pokecontext
     const orderedPokemons = pokemons.sort(ordered)
+    //get the lengt of the array to limit results in comps below 
     const total = orderedPokemons.length
-
-    console.log(orderedPokemons)
-
-    const returnCheck = checkbox.map( data => {
-        return data
-    })
-    console.log(returnCheck)
-
-    const returndata = orderedPokemons.map( data => {
-            if(returnCheck.checked){
-                return data.filter( poke => poke.type.includes(returnCheck.type))
-            }
-        })
-    console.log(returndata)
-    
+    // filter by Type, if true shows in the view
+    const filterType = checkbox.filter(data => data.checked !== false)
+    const typeOfPokemon = filterType.map( data => data.type)
 
     return (
-        <section className="card-container">
-                    {
-                        orderedPokemons.map( (poke, index ) => 
-                        (index < counter ) &&
-                        <Card 
-                            {...poke} 
-                            key={poke.id}/> 
-                        )
-                    }
-
-            {
-                counter < total 
-                ? <button
-                onClick={increase}
-                >
-                    see more ...
-                </button>
-                : <button
-                    onClick={reset}    
-                >
-                    reset
-                </button>
-            }
-            
-        </section>
+        filterType.length > 0 
+        ? <FilterPokemons 
+            orderedPokemons={orderedPokemons}
+            typeOfPokemon={typeOfPokemon}
+            />
+        : <SearchPokemon 
+            orderedPokemons={orderedPokemons}
+            total={total}
+            />
     )
 }

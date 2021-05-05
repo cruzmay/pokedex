@@ -8,6 +8,7 @@ export const Pokedex = () => {
 
     const { pokemons, gender, species, loading } = useApiGate()
     const [ checkbox, setcheckbox ] = useState([])
+    const [ checkboxColor, setCheckboxColor] = useState([])
 
     return (
         <PokeContext.Provider
@@ -17,7 +18,9 @@ export const Pokedex = () => {
             species,
             loading,
             checkbox,
-            setcheckbox
+            setcheckbox,
+            checkboxColor,
+            setCheckboxColor,
             }}
         >
             {

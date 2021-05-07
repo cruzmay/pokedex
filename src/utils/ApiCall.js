@@ -3,6 +3,7 @@ export const ApiCall = async () => {
         let pokemons = []
         let species = []
         let gender = []
+        const arr = []
 
         const PokeApi = await fetch(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=898`)
         const pokeData = await PokeApi.json()
@@ -35,6 +36,6 @@ export const ApiCall = async () => {
                     .then(data => gender.push(data) )
             }
         })
-
+        console.log([].concat)
         return { pokemons, species, gender } 
     }

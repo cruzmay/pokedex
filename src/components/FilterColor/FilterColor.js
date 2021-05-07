@@ -1,44 +1,42 @@
-import React, { useContext, useEffect, useReducer} from 'react'
+import React, { memo, useCallback, useContext, useEffect, useReducer} from 'react'
 import { PokeContext } from '../../context/PokeContext'
 import { ColorChecboxReducer } from '../../reducers/ColorChecboxReducer'
 import { noRepeatElement } from '../../utils/noRepeatElement'
 import { ordered } from '../../utils/ordered'
 
-export const FilterColor = () => {
+export const FilterColor = memo(() => {
     const { species, setCheckboxColor } = useContext(PokeContext)
     
-    const types = species.map( data => {
+    const colors = species.map( data => {
       return data.color.name
     })
-    let colorCheckboxes = types.filter( noRepeatElement )
-    let arrColorCheckBoxes = colorCheckboxes.map((filt, i) => {
+    const colorCheckboxes = colors.filter( noRepeatElement )
+    const arrColorCheckBoxes = colorCheckboxes.map((ele, i) => {
         return {
-            color: filt,
+            color: ele,
             checked: false,
             id: i
         }
     })
-    let colorCheckBoxesOrdered = arrColorCheckBoxes.sort(ordered)
+    const colorCheckBoxesOrdered = arrColorCheckBoxes.sort(ordered)
  
-    const init = () => colorCheckBoxesOrdered
-    const [ FilterColor, dispatch] = useReducer(ColorChecboxReducer, [], init)
+    const initColor = () => colorCheckBoxesOrdered
+    const [ FilterColor, dispatch] = useReducer(ColorChecboxReducer, [], initColor)
 
-    const handleCheckbox = (e) => {
-        dispatch({
+     const handleColorCheckbox = useCallback((e) => { dispatch({
             type: 'toogleColorFilter',
             payload: e.target.value
-        }) 
-        
-    }
+        }) },[dispatch])
+
     useEffect(()=>{
         setCheckboxColor(FilterColor)
     },[FilterColor, setCheckboxColor])
 
-    console.log(FilterColor)
+    console.log('color', FilterColor)
     
     return (
         <>
-            <h2>types</h2>
+            <h2>Color</h2>
                 {
                     colorCheckBoxesOrdered.map( check => {
                         return (
@@ -46,7 +44,7 @@ export const FilterColor = () => {
                             <input 
                             type="checkbox" 
                             value={check.color}
-                            onClick={handleCheckbox}
+                            onClick={handleColorCheckbox}
                             />
                             <label>{check.color}</label>
                         </div>
@@ -55,4 +53,4 @@ export const FilterColor = () => {
                 }
         </>
     )
-}
+})

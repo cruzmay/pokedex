@@ -2,7 +2,7 @@ export const ColorChecboxReducer = (state = [], action) => {
    switch (action.type) {
        case 'toogleColorFilter':
             return state.map( colorcheck => {
-                if(colorcheck.type === action.payload) {
+                if(colorcheck.color === action.payload) {
                     return {
                         ...colorcheck, 
                         checked: !colorcheck.checked

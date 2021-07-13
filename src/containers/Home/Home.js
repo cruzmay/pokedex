@@ -1,10 +1,10 @@
 import React from 'react'
-import { CardContainer } from '../../components/CardContainer/CardContainer'
+import { CardList } from '../../components/CardList/CardList'
 
 export const Home = () => {
     return (
         <section className="content"> 
-            <CardContainer/>
+            <CardList/>
         </section>
     )
 }

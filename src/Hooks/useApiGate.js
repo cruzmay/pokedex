@@ -6,6 +6,7 @@ export const useApiGate = () => {
         pokemons: [],
         species: [],
         gender: [],
+        evolution: [],
         loading: true
         })
 
@@ -14,6 +15,7 @@ export const useApiGate = () => {
             pokemons: data.pokemons,
             species: data.species,
             gender: data.gender,
+             evolution: data.evolution,
             loading: false
         })})
     },[])

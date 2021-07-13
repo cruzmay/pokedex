@@ -3,7 +3,8 @@ export const ApiCall = async () => {
         let pokemons = []
         let species = []
         let gender = []
-        const arr = []
+        let evolution = []
+
 
         const PokeApi = await fetch(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=898`)
         const pokeData = await PokeApi.json()
@@ -22,6 +23,28 @@ export const ApiCall = async () => {
             return {
                 url: fetch(esp.url)
                     .then(response => response.json())
+                    .then( async data => ({
+                        id: data.id,
+                color: data.color.name,
+                flavor_text_entries: data.flavor_text_entries.find(
+                    data => data.language.name === 'en'),
+                habitat: data.habitat ? data.habitat.name : null,
+                is_baby: data.is_baby,
+                is_legendary: data.is_legendary,
+                is_mythical: data.is_mythical,
+                evolution_chain: await fetch(data.evolution_chain.url)
+                    .then(response => response.json())
+                    .then(data => ({
+                        // evolution: data.chain,
+                        evolves_1: data.chain.species.name,
+                        evolves_2: data.chain.evolves_to[0]
+                            ? data.chain.evolves_to[0].species.name
+                            : null,
+                        evolves_3: (data.chain.evolves_to[0] && data.chain.evolves_to[0].evolves_to[0])
+                            ? data.chain.evolves_to[0].evolves_to[0].species.name
+                            : null
+                    }))
+                    }))
                     .then(data => species.push(data))
             }
         })
@@ -36,6 +59,26 @@ export const ApiCall = async () => {
                     .then(data => gender.push(data) )
             }
         })
-        console.log([].concat)
-        return { pokemons, species, gender } 
+
+        const pokemonEvolutionApi = await fetch(`https://pokeapi.co/api/v2/evolution-chain/?offset=20&limit=898`)
+        const pokemonEvolutionData = await pokemonEvolutionApi.json()
+        pokemonEvolutionData.results.map( evol => {
+            return {
+                evolution: fetch(evol.url)
+                    .then(response => response.json())
+                    .then(data => evolution.push(data) )
+
+            }
+        })
+        const countApi = await fetch(`https://pokeapi.co/api/v2/pokemon-species/`)
+        const count = await countApi.json()
+        count.results.map( count => {
+            return {
+                count: count.count
+            }
+        })
+
+        console.log('genero', gender)
+        
+        return { pokemons, species, gender, evolution } 
     }

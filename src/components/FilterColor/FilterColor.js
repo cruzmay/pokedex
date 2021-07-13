@@ -5,10 +5,10 @@ import { noRepeatElement } from '../../utils/noRepeatElement'
 import { ordered } from '../../utils/ordered'
 
 export const FilterColor = memo(() => {
-    const { species, setCheckboxColor } = useContext(PokeContext)
+    const { getPokemons , setCheckboxColor } = useContext(PokeContext)
     
-    const colors = species.map( data => {
-      return data.color.name
+    const colors = getPokemons.map( data => {
+      return data.color
     })
     const colorCheckboxes = colors.filter( noRepeatElement )
     const arrColorCheckBoxes = colorCheckboxes.map((ele, i) => {
@@ -32,7 +32,7 @@ export const FilterColor = memo(() => {
         setCheckboxColor(FilterColor)
     },[FilterColor, setCheckboxColor])
 
-    console.log('color', FilterColor)
+    // console.log('color', FilterColor)
     
     return (
         <>

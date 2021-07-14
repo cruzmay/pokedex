@@ -11,6 +11,12 @@ export const Pokedex = () => {
     const [ checkboxColor, setCheckboxColor] = useState([])
     const [ CheckboxGenre, setCheckboxGenre] = useState([])
     const [searchPokemon, setsearchPokemon] = useState('')
+    const [search, setsearch] = useState('')
+    const [modal, setmodal] = useState({click: false, id: ''})
+
+      const reset = () => {
+        setsearch('')
+    }
 
 
     const arrayFusion = pokemons.map(data => ({
@@ -65,7 +71,12 @@ export const Pokedex = () => {
             setCheckboxGenre,
             getPokemons,
             searchPokemon, 
-            setsearchPokemon
+            setsearchPokemon,
+            search, 
+            setsearch,
+            reset,
+            modal, 
+            setmodal,
             }}
         >
             {

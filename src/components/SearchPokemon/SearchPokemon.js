@@ -13,13 +13,13 @@ export const SearchPokemon = () => {
     setsearchPokemon(search)
     reset()
     }
-    
+
 
     return (
         <form onSubmit={handleSubmit}>
             <input
                 type='search'
-                placeholder='search...'
+                placeholder='search by color, type, gender, id...'
                 value={search}
                 onChange={handleSearch}
             />

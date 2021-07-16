@@ -5,13 +5,16 @@ import { noRepeatElement } from '../../utils/noRepeatElement'
 import { ordered } from '../../utils/ordered'
 
 export const FilterGenre = () => {
-    const { getPokemons , setCheckboxGenre } = useContext(PokeContext)
+    const { setCheckboxGenre } = useContext(PokeContext)
     
-    const gender = getPokemons.map( data => {
-      return data.gender
-    })
+    
+        function f() {
+    return Array.from(arguments);
+    }
+   const genders = f('male', 'female', 'genderless', 'all')
 
-    const genreCheckboxes = gender[0].filter( noRepeatElement )
+
+    const genreCheckboxes = genders.filter( noRepeatElement )
     const arrGenreCheckBoxes = genreCheckboxes.map((data, i) => {
         return {
             gender: data,

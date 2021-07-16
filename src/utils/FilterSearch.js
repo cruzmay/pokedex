@@ -44,10 +44,10 @@ export const FilterSearch = () => {
             && data.type.some( c => typeOfPokemon.includes(c)))
         } else if ( filteredType.length === 0 && filteredCol.length === 0 && filteredGender.length > 0  ) {
             //filtered by gender
-            return orderedPokemons.filter(data => data.gender.some( c => genderOfPokemon.includes(c))) 
+            return orderedPokemons.filter(data => data.gender.some( c => genderOfPokemon.includes(c))) || orderedPokemons
         } else if (searchPokemon.length > 0 ) {
-            //filtered by gender
-            return orderedPokemons.filter(data => data.name.includes(searchPokemon) || data.color.includes(searchPokemon) || data.type.includes(searchPokemon) || data.id === parseInt(searchPokemon) )
+            //filtered search input
+            return orderedPokemons.filter(data => data.name.includes(searchPokemon) || data.color.includes(searchPokemon) || data.type.includes(searchPokemon) || data.description.includes(searchPokemon) || data.id === parseInt(searchPokemon) )
         } else {
             // all pokemons 
             return orderedPokemons

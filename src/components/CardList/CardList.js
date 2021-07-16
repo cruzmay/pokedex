@@ -17,7 +17,7 @@ export const CardList = () => {
     const handleClick = (id) => {
         const dataModal = filteredPokemons.find(data => data.id === id)
         setmodal({ click: true, data: dataModal })
-        console.log(dataModal)
+        // console.log(dataModal.type)
     }
 
     return (

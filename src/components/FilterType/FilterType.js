@@ -5,7 +5,7 @@ import { noRepeatElement } from '../../utils/noRepeatElement'
 import { ordered } from '../../utils/ordered'
 
 export const FilterType = memo(() => {
-    const { getPokemons, setcheckbox } = useContext(PokeContext)
+    const { getPokemons, setcheckbox, reset } = useContext(PokeContext)
     
     const types = getPokemons.map( data => data.type[0])
 
@@ -23,10 +23,13 @@ export const FilterType = memo(() => {
     const init = () => checkBoxesOrderedId
     const [ FilterType, dispatch] = useReducer(CheckBoxReducers, [], init)
 
-    const handleCheckbox = useCallback((e) => { dispatch({
+    const handleCheckbox = useCallback((e) => { 
+        reset()
+        dispatch({
             type: 'toogleFilter',
             payload: e.target.value
-        }) },[dispatch])
+        })
+    },[dispatch, reset])
         
     useEffect(()=>{
         setcheckbox(FilterType)

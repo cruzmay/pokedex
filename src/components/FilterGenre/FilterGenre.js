@@ -11,7 +11,7 @@ export const FilterGenre = () => {
         function f() {
     return Array.from(arguments);
     }
-   const genders = f('male', 'female', 'genderless', 'all')
+   const genders = f('all', 'male', 'female', 'genderless' )
 
 
     const genreCheckboxes = genders.filter( noRepeatElement )

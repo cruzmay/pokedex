@@ -10,6 +10,7 @@ export const CardList = () => {
 
     const filteredPokemons = FilterSearch()
     const total = filteredPokemons.length
+    console.log(total)
     const { counter, increase } = useCounter(20)
     const {modal, setmodal} = useContext(PokeContext)
     
@@ -19,6 +20,10 @@ export const CardList = () => {
         setmodal({ click: true, data: dataModal })
         // console.log(dataModal.type)
     }
+    const handleAdd = (id) => {
+        console.log('add', id)
+    }
+    handleAdd()
 
     return (
         <>
@@ -34,6 +39,7 @@ export const CardList = () => {
                         {...poke} 
                         key={poke.id}
                         handleClick={handleClick}
+                        handleAdd={handleAdd}
                     /> 
                         )
                     }

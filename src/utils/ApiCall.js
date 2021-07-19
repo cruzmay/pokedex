@@ -36,14 +36,14 @@ export const ApiCall = async () => {
                     .then(response => response.json())
                     .then(data => ({
                         // evolution: data.chain,
-                        evolves_1: data.chain.species.name,
+                        evolves_1: data.chain.species.url,
                         evolves_2: data.chain.evolves_to[0]
-                            ? data.chain.evolves_to[0].species.name
+                            ? data.chain.evolves_to[0].species.url
                             : null,
                         evolves_3: (data.chain.evolves_to[0] && data.chain.evolves_to[0].evolves_to[0])
-                            ? data.chain.evolves_to[0].evolves_to[0].species.name
+                            ? data.chain.evolves_to[0].evolves_to[0].species.url
                             : null
-                    }))
+                        }))
                     }))
                     .then(data => species.push(data))
             }
@@ -77,8 +77,7 @@ export const ApiCall = async () => {
                 count: count.count
             }
         })
-
-        console.log('genero', gender)
+        // debugger
         
         return { pokemons, species, gender, evolution } 
     }

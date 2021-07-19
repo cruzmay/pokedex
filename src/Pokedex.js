@@ -28,10 +28,9 @@ export const Pokedex = () => {
         type: data.types.map( data => data.type.name),
         gender: gender.filter(d => d.pokemon_species_details.map(c => c.pokemon_species.name).includes(data.name)),
         species: species.filter(d=> d.id === data.id),
-      
     }))
 
-    const pokemon = arrayFusion.map( data => ({
+    const pokemonArr = arrayFusion.map( data => ({
         evolution: data.species.map(data => data.evolution_chain),
         name: data.name,
         id: data.id,
@@ -39,12 +38,28 @@ export const Pokedex = () => {
         weight: data.weight,
         type: data.type,
         habitat: data.species[0].habitat ? data.species[0].habitat : null,
-        gender: data.gender.length > 0 ? data.gender.map(d => d.name) : data.gender.name,
+        gender: Array.from(data.gender.map(d => d.name)), 
         color: data.species[0].color,
         description: data.species[0].flavor_text_entries.flavor_text
 
     }))
-    
+
+     const pokemon = pokemonArr.map( data => ({
+        evolution: data.evolution,
+        name: data.name,
+        id: data.id,
+        height: data.height,
+        weight: data.weight,
+        type: data.type,
+        habitat: data.habitat,
+        gender: [...data.gender, 'all'], 
+        color: data.color,
+        description: data.description
+
+    }))
+
+    console.log('data poke', pokemonArr)
+
     const storagePokemons = JSON.parse(localStorage.getItem('pokemon')) 
     const getPokemons = storagePokemons || pokemon
     // console.log(getPokemons.length)
